@@ -1,18 +1,18 @@
-// // 실시간 상담 페이지 [최종적으로 나와야하는 = 부위 카테고리, 모든 게시글 리스트, 카테고리별 리스트, 작성하기 버튼]
+// 실시간 상담 페이지 [최종적으로 나와야하는 = 부위 카테고리, 모든 게시글 리스트, 카테고리별 리스트, 작성하기 버튼]
 "use client";
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Hashtag from "@/utils/hashtag";
 import addIcon from "@/assets/icons/consult/add.png";
 import PagebackBtn from "@/components/layout/PageBackBtn";
 import ConsultTabs from "@/components/consult/ConsultTabs";
 import AnswerComplete from "@/components/layout/AnswerComplete";
 import AnswerWaiting from "@/components/layout/AnswerWaiting";
-
 import type { ConsultType } from "@/types";
 import { supabase } from "@/api/supabase";
+import Image from "next/image";
+
 // import { ConsultType } from "@/types";
 
 export type PostType = {
@@ -55,13 +55,13 @@ const ConsultPage = () => {
       const session = await supabase.auth.getSession();
       console.log("consult session ===> ", session);
 
-      if (session.data.session === null) {
-        alert("로그인이 필요한 서비스입니다.");
-        router.push("/login");
-      } else {
-        console.log("consult session ===> ", session.data.session);
-        router.push("/consult/ask");
-      }
+      // if (session.data.session === null) {
+      //   alert("로그인이 필요한 서비스입니다.");
+      //   router.push("/login");
+      // } else {
+      //   console.log("consult session ===> ", session.data.session);
+      //   router.push("/consult/ask");
+      // }
     } catch (error) {
       console.log("error", error);
     }
@@ -99,20 +99,37 @@ const ConsultPage = () => {
                   {consult?.consult_photos && consult?.consult_photos.length ? (
                     consult?.consult_photos.slice(0, 1).map((item) => {
                       return (
-                        <img
+                        <div
                           key={item?.photo_id}
-                          src={item?.photos || undefined} // 이미지 URL
-                          alt="Uploaded Image"
-                          className="w-[89px] h-[80px] bg-gray-300 rounded-lg flex-none order-0 flex-grow-0"
-                        />
+                          className="w-[90px] h-[90px] bg-bluegray rounded-lg flex-none order-0 flex-grow-0"
+                        >
+                          <Image
+                            src={item?.photos || ""} // 이미지 URL
+                            alt="Uploaded Image"
+                            width={90}
+                            height={90}
+                            layout="fixed"
+                            // className="w-[89px] h-[80px] bg-gray-300 rounded-lg flex-none order-0 flex-grow-0"
+                          />
+                        </div>
                       );
                     })
                   ) : (
-                    <img
-                      src={`https://ifh.cc/g/WDVwsQ.png`} // 이미지 URL
-                      alt="Uploaded Image"
-                      className="w-[89px] h-[80px] bg-gray-300 rounded-lg flex-none order-0 flex-grow-0"
-                    />
+                    // <img
+                    //   src={`https://ifh.cc/g/WDVwsQ.png`} // 이미지 URL
+                    //   alt="Uploaded Image"
+                    //   className="w-[89px] h-[80px] bg-gray-300 rounded-lg flex-none order-0 flex-grow-0"
+                    // />
+                    <div>
+                      <Image
+                        src={`https://ifh.cc/g/WDVwsQ.png`} // 이미지 URL
+                        alt="Uploaded Image"
+                        width={89}
+                        height={80}
+                        layout="fixed"
+                        className="bg-gray-300 rounded-lg flex-none order-0 flex-grow-0"
+                      />
+                    </div>
                   )}
                 </div>
                 <div className="ml-4 w-full h-auto overflow-hidden pb-[2px]">
